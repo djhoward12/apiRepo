@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  title: myAPID
+  version: '1.0'
+  description: my api that...
+  termsOfService: https://www.example.com
+  contact:
+    email: djhoward12@gmail.com
+    name: Derek Howard
+    url: https://www.example.com/contact
+  license:
+    name: Terms
+    url: https://www.example.com/terms
+servers:
+  - url: https://my-json-server.typicode.com/typicode/demo/
+    variables: {}
+  - url: https://my-json-server.typicode.com/djhoward12/apiRepo/
+    variables: {}
+  - url: http://localhost:3000/
+    variables: {}
+    description: local json server
+paths:
+  /posts:
+    summary: blog posts
+    description: API for posts
+    get:
+      summary: fetch all posts
+      operationId: fetchposts
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                sample response:
+                  value: >-
+                    [ { "id": 1, "title": "Post 1" }, { "id": 2, "title": "Post
+                    2" }, { "id": 3, "title": "Post 3" } ]
+      tags:
+        - posts
+    post:
+      summary: add new post
+      description: store post on server
+      operationId: storePost
+      responses:
+        2XX:
+          description: successful Post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                title:
+                  type: string
+                  example: new post
+                author:
+                  type: string
+                  example: djhoward
+      tags:
+        - posts
+  /comments:
+    summary: blog comments
+    description: API for comments
+    get:
+      summary: fetch all comments
+      operationId: fetchcomments
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                sample response:
+                  value: >-
+                    [ { "id": 1, "body": "some comment", "postId": 1 }, { "id":
+                    2, "body": "some comment", "postId": 1 } ]
+      tags:
+        - comments
+  /posts/{Id}:
+    summary: post level operations
+    description: fetch, update, delete a post
+    parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      summary: fetch one post
+      description: returns on post
+      operationId: getPost
+      responses:
+        default: 
+          description: Default error sample
+            response
+      tags:
+        - posts
